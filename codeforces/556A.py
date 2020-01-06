@@ -1,0 +1,5 @@
+input()
+line = input()
+one = line.count("1")
+zero = line.count("0")
+print(abs(one-zero))

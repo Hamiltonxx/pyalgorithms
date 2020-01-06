@@ -1,0 +1,5 @@
+a = input()
+b = input()
+l = len(a)
+ans = int(a,2)^int(b,2)
+print(("{0:0"+str(l)+"b}").format(ans))

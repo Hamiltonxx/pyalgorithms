@@ -1,0 +1,10 @@
+T = int(input())
+for i in range(T):
+    input()
+    s = input()
+    r = input()
+    res = int(s, 2) ^ int(r, 2)
+    resb = "{:b}".format(res)
+    cnt1 = resb.count("1")
+    print(cnt1)
+    print(["YES","NO"][cnt1 & 1])

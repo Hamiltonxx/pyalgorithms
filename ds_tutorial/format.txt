@@ -1,0 +1,62 @@
+单个格式化
+语法：  {}.format(value)
+(value) 可以为整数，浮点数，字符串，字符 甚至变量
+
+print("{}, is learning python.".format("Xulekai"))
+
+s = "This article is written in {}"
+print(s.format("Python3"))
+
+print("Hello, I am {} years old!".format(18))
+
+多个格式化
+语法:  {}{}.format(value1, value2)
+(value1, value2) 可以为整数，浮点数，字符串，字符 甚至变量，跟上面不一样的是，变量数必须等于占位数
+
+my_string = "{}, is a {} {} science portal for {}"
+# my_string = "{}, is a {} science portal for {}"
+print(my_string.format("GeeksforGeeks","computer","geeks"))
+#会报错
+
+print("Hi! My name is {} and I am {} years old".format("Xulekai", 11))
+print("This is {} {} {} {}".format("one","two","three","four"))
+
+带位置或关键字的格式化
+语法：  {0}{1}.format(value0,value1)
+
+print("{0} love {1}!!".format("teacher","student"))
+print("{1} love {0}!!".format("teacher","student"))
+
+print("There are {n} students, one of theme named {0}, he is {1} years old".format("xulekai",11,n=30))
+
+指定类型
+大括号里可以指定类型
+s – strings    字符串
+d – decimal integers (base-10)    (10进制)整数
+f – floating point display    浮点数
+c – character    字符
+b – binary    二进制数
+o – octal    八进制数
+x – hexadecimal with lowercase letters after 9    (小写)十六进制数
+X – hexadecimal with uppercase letters after 9    (大写)十六进制数
+
+print("This site is {0:f}% securely {1}!!".format(100,"encrypted"))
+print("My average of this {0} was {1:.2f}%".format("semester",78.234876))
+print("My average of this {0} was {1:.0f}%".format("semester",78.234876))
+
+#二进制数
+print("The {0} of 100 is {1:b}".format("binary", 100)) 
+print("The {0} of 100 is {1:o}".format("octal", 100)) 
+
+对齐(补0或空格等)
+
+print("{0:4}, is the computer science portal for {1:8}!".format("GeeksforGeeks", "geeks"))
+print("It is {0:5} degrees outside !".format(40))
+print("{0:4} was founded in {1:16}!".format("GeeksforGeeks", 2009))
+
+lst = [3,4,5,6,7,8,9]
+for x in lst:
+    print("{:6d}{:6d}{:6d}{:6d}".format(x, x*x, x*x*x, x*x*x*x))
+for x in lst:
+    print("{:06d} {:06d} {:06d} {:06d}".format(x, x*x, x*x*x, x*x*x*x))
+    
