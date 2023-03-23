@@ -10,20 +10,20 @@ import re
 
 txt = "The rain in Spain"
 x = re.search("^The.*Spain$", txt)
-print(x)
+print(True if x else False)
 x = re.search("\s", txt)
 print("The first white-space location:", x.start())
 print(txt.index(" "))
 x = re.findall("ai", txt)
-print(x)
+print(True if x else False)
 x = re.split("\s", txt)
-print(x)
+print(True if x else False)
 x = re.split("\s", txt, 1)
-print(x)
+print(True if x else False)
 x = re.sub("\s", "9", txt)
-print(x)
+print(True if x else False)
 x = re.sub("\s", "9", txt, 2)
-print(x)
+print(True if x else False)
 
 # Metacharacter
 # [] \ . ^ $ * + ? {} | ()
@@ -31,3 +31,6 @@ print(x)
 # \A \b \B \d \D \s \S \w \W \Z
 # Set
 # [arn] [a-n] [^arn] [0123] [0-9] [0-5][0-9] [a-zA-Z] [+]
+
+y = re.match("^c*a*b$","aab")
+print(True if y else False)
