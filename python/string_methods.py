@@ -8,6 +8,7 @@ print("   abc  ".lstrip())
 print("   abc  ".rstrip())
 print("   abc  ".strip())
 print("hello world".replace("o","#",1))
+print("HelloWorld".removeprefix("Hello"))
 print("hello world 233".split())
 print("hello world 233".split(" ",1))
 print("hello world 233".rsplit(" ",1))
@@ -42,6 +43,9 @@ print("65535".isnumeric())
 print("1.5".isnumeric()) # "-1","1.5"
 print("   ".isspace())
 print("Hello world".isupper())
+
+print("42".zfill(5))
+print("-42".zfill(5))
 
 print("#".join(("John","Peter","Lisa")))
 
