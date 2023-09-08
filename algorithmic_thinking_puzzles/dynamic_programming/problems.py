@@ -212,23 +212,38 @@ print('Maximum height:', box_stack_height(boxes))
 # Subset Sum
 # n个正数集合里选子集，使之和为T, [3,2,4,19,3,7,13,10,6,11]
 # 可以转换为背包问题
-def subset_sum(nums, target):
-    n = len(nums)
-    dp = [[False] * (target+1) for _ in range(n+1)]
-    dp[0][0] = True
+# dp[i][j]定义为前i个元素和为j
+# 状态转移方程 dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i]]
+# def subset_sum(nums, target):
+#     n = len(nums)
+#     dp = [[False] * (target+1) for _ in range(n+1)]
+#     dp[0][0] = True
 
-    for i in range(1, n+1):
-        dp[i][0] = True
-        for j in range(1, target+1):
-            if j < nums[i-1]:
-                dp[i][j] = dp[i-1][j]
-            else:
-                dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
-    return dp[n][target]
+#     for i in range(1, n+1):
+#         dp[i][0] = True
+#         for j in range(1, target+1):
+#             if j < nums[i-1]:
+#                 dp[i][j] = dp[i-1][j]
+#             else:
+#                 dp[i][j] = dp[i-1][j] or dp[i-1][j-nums[i-1]]
+#     return dp[n][target]
+# 更精简的写法
+def exist_subset_sum(nums, target):
+    # dp[i]定义为存在子集和为i
+    dp = [False] * (target+1)
+    dp[0] = True
+
+    for num in nums:
+        for i in range(target, num-1, -1):
+            dp[i] = dp[i] or dp[i-num]
+
+    return dp[target]
+
 
 A = [3,2,4,19,3,7,13,10,6,11]
 T = 17
 print(subset_sum(A,T))
+
 
 # 编辑距离问题 把字符串A转换成字符串B的最小操作数，可以增、删、改A的字符
 def editDistance(stra, strb):

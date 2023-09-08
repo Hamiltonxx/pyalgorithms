@@ -9,9 +9,12 @@ def preorder(root): # 先序，先root
     if not root:
         return []
     result = [root.data]
-    result.extend(preorder(root.left))
-    result.extend(preorder(root.right))
+    result += preorder(root.left)
+    result += preorder(root.right)
     return result
+
+root = Node(10,Node(5,Node(2),Node(7)),Node(15,Node(12),Node(17)))
+print(preorder(root))
     
 def preorder_iterative(root):
     if not root:

@@ -124,7 +124,19 @@ def next_higher_number_same_ones(x):
 
     return next
 
-print(next_higher_number_same_ones(12)) 
+def next_higher_number_same_ones_v2(x):
+    b = "0"+bin(x)[2:]
+    r1 = b.rindex("1")
+    # 0要在1前
+    r0 = b[:r1].rindex("0")
+    c1 = b[r0:].count('1')
+    ans = b[:r0] + "1" + "0"*(len(b)-r0-c1) + "1"*(c1-1)
+    return int(ans, 2)
+
+print("next higher number")
+x = int("1101001",2)
+print(next_higher_number_same_ones(x)) 
+print(next_higher_number_same_ones_v2(x))
 
 #* Find the maximum subarray xor in a given array
 def find_max_xor_sum(nums):
@@ -208,10 +220,14 @@ def indexof0(b):
             prepre = pre
             pre = i
     return mxidx
-        
 # b = [1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1]
 b = [1, 1, 1, 1, 0]
 print(indexof0(b))
+
+# Closest/Next smaller and greater numbers with same number of set bits.
+# 1. zero-to-one flip + one-to-zero flip
+# 2. next greater: (最右)0在(最右)1前; next smaller: (最右)1在(最右)0前
+
 
 
 
