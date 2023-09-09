@@ -32,5 +32,27 @@ def topological_sort(graph):
 
     return topological_order
 
-result = topological_sort(graph)
-print(result)
+# result = topological_sort(graph)
+# print(result)
+
+def topsort(graph): # --> List
+    indeg = {v:0 for v in graph}
+    for v in graph:
+        for u in graph[v]:
+            indeg[u] += 1
+
+    q = deque()
+    for v in graph:
+        if indeg[v] == 0:
+            q.append(v)
+
+    order = []
+    while q:
+        v = q.popleft()
+        order.append(v)
+        for u in graph[v]:
+            indeg[u] -= 1
+            if indeg[u] == 0:
+                q.append(u)
+
+    return order

@@ -1,3 +1,6 @@
+import random
+import functools
+
 ## 1. Fibonacci [1,1,2,3,5,8]
 def fibonacci(n):
     series = [1,1]
@@ -15,8 +18,7 @@ def fibonacci(n):
 print(fibonacci(5))
 
 ## 2. Stock market strategy [2,5,1,3]
-# Assume that you are allowed to own no more than 1 share at any time
-import random 
+# Assume that you are allowed to own no more than 1 share at any time 
 prices = [random.randrange(1,20) for _ in range(8)]
 print(prices)
 # prices = [3, 10, 8, 2, 15, 5, 19, 10]
@@ -67,10 +69,10 @@ def max_profit_limit_budget(prices, budget):
         if cash1 < 0: cash1 = -float('inf')
         # Add a high penalty to ensure we never choose this option.
     return cash0 - budget
-budget = random.randrange(min(prices), prices[0])
+# budget = random.randrange(min(prices), prices[0])
 # budget = random.randrange(min(prices))
-print('budget',budget)
-print(max_profit_limit_budget(prices, budget))
+# print('budget',budget)
+# print(max_profit_limit_budget(prices, budget))
 # 请掌握有限状态机，几乎所有的DP问题都能用这种方式解决
 # Variation: limited number of transactions
 # The stock can only be sold up to a certain number of times.
@@ -85,3 +87,62 @@ def max_profit_limit_transactions_leetcode(prices, tx):
     return profit[tx]
 
 ## 3. Change making 
+coins, amount = [1,2,6,10], 18 # 假设每种硬币的数量无限
+# start from amount 0, keep adding coins until reaching the amount
+def make_change_leetcode(coins, amount): # 返回最少硬币个数
+    dp = [0] + [float('inf')] * amount
+    for coin in coins:
+        for i in range(coin, amount+1): # 先遍历物品，再遍历背包
+            dp[i] = min(dp[i], dp[i-coin]+1)
+    return -1 if dp[amount]==float('inf') else dp[amount]
+
+def make_change(coins, amount): # 返回最少硬币的组合
+    dp = [[0,[]]] + [[float('inf'),[]]] * amount
+    for i in range(1, amount+1):
+        for coin in coins:
+            if coin<=i and dp[i-coin][0]+1<dp[i][0]:
+                dp[i] = [dp[i-coin][0]+1, dp[i-coin][1]+[coin]]
+    return dp[amount][1]
+print(make_change(coins, amount))
+
+# Variant: count the number of ways to pay(permutations)
+def count_ways_to_pay_permutation(coins, amount):
+    @functools.lru_cache(None)
+    def helper(amount):
+        if amount == 0:
+            return 1
+        if amount < 0:
+            return 0
+        num_ways = 0
+        for first in coins:
+            num_ways += helper(amount - first)
+        return num_ways
+    return helper(amount)
+print(count_ways_to_pay_permutation([1,2,5],4))
+
+def make_change_ways_permutation(coins, amount):
+    pass 
+
+# Variant: count the number of ways to pay(combinations)
+def make_change_combination_leetcode(coins, amount):
+    dp = [1] + [0] * amount 
+    for c in coins:
+        for i in range(c, amount+1):
+            dp[i] += dp[i-c]
+    return dp[amount]
+
+def count_ways_to_pay_combination(coins, amount):
+    @functools.lru_cache(None)
+    def helper(index, amount):
+        if amount==0:
+            return 1
+        if amount<0 or index==len(coins):
+            return 0
+        num_ways = 0
+        coin = coins[index]
+        for repeats in range(amount // coin +1):
+            payment = coin * repeats
+            num_ways += helper(index+1, amount-payment)
+        return num_ways 
+    return helper(0,amount)
+print([count_ways_to_pay_combination(coins, j) for j in range(3,10)])
