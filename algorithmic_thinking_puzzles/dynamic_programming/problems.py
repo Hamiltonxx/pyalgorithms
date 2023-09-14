@@ -141,25 +141,39 @@ def knapsack_01(weight, value, capacity):
 
 # 用一维数组(滚动数组)解决01背包
 # dp[j]表示背包容量为j时可以获得的最大价值
+# def knapsack01(weight, value, capacity):
+#     n = len(weight)
+#     dp = [0] * (capacity + 1)
+
+#     for i in range(n):
+#         for j in range(capacity, weight[i]-1, -1):
+#             dp[j] = max(dp[j], value[i]+dp[j-weights[i]])
+
+#     return dp[capacity]
+
 def knapsack01(weight, value, capacity):
-    n = len(weight)
-    dp = [0] * (capacity + 1)
-
-    for i in range(n):
-        for j in range(capacity, weight[i]-1, -1):
-            dp[j] = max(dp[j], values[i]+dp[j-weights[i]])
-
+    dp = [0] * (capacity+1)
+    for w,v in zip(weight, value):
+        for j in range(capacity, w-1, -1):
+            dp[j] = max(dp[j], dp[j-w]+v)
     return dp[capacity]
 
 print(knapsack01(weights,values,capacity))
 
 # 完全背包
+# def knapsackinf(weight, value, capacity):
+#     n = len(weight)
+#     dp = [0] * (capacity + 1)
+#     for i in range(n):
+#         for j in range(weight[i], capacity+1):
+#             dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
+#     return dp[capacity]
+
 def knapsackinf(weight, value, capacity):
-    n = len(weight)
-    dp = [0] * (capacity + 1)
-    for i in range(n):
-        for j in range(weight[i], capacity+1):
-            dp[j] = max(dp[j], dp[j-weight[i]]+value[i])
+    dp = [0] * (capacity+1)
+    for w,v in zip(weight, value):
+        for j in range(w, capacity+1):
+            dp[j] = max(dp[j], dp[j-w]+v)
     return dp[capacity]
 
 # values = [60, 100, 120] 
@@ -242,7 +256,7 @@ def exist_subset_sum(nums, target):
 
 A = [3,2,4,19,3,7,13,10,6,11]
 T = 17
-print(subset_sum(A,T))
+print(exist_subset_sum(A,T))
 
 
 # 编辑距离问题 把字符串A转换成字符串B的最小操作数，可以增、删、改A的字符
@@ -284,8 +298,42 @@ def longest_palindromic_subsequence(s):
 
     return dp[0][n-1]
 
+def lcs(s1, s2):
+    d, a = defaultdict(list), []
+    for i,x in enumerate(s2):
+        d[x].append(i)
+    for x in s1:
+        if x in d:
+            for i in reversed(d[x]):
+                idx = bisect.bisect_left(a, i)
+                if idx == len(a):
+                    a.append(i)
+                else:
+                    a[idx] = i
+    return len(a)
+
 # s = "AGCTCBMAACTGGAM"
 s = "BBABCBCAB"
 print(longest_palindromic_subsequence(s))
 
 
+# 最长公共子序列 bisect
+from collections import defaultdict
+import bisect
+def lcs(s1, s2):
+    d, a = defaultdict(list), []
+    for i,x in enumerate(s2):
+        d[x].append(i)
+    for x in s1:
+        if x in d:
+            for i in reversed(d[x]):
+                idx = bisect.bisect_left(a, i)
+                if idx == len(a):
+                    a.append(i)
+                else:
+                    a[idx] = i
+    return len(a)
+
+# 最长公共子串
+def lcsa(s1, s2):
+    pass

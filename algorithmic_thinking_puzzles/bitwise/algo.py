@@ -54,3 +54,4 @@ print(count_bits(6), count_bits1(6))
 
 # binary string to int
 print(int("01001111", 2))
+

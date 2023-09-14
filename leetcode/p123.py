@@ -43,15 +43,29 @@ prices = [3,3,5,0,0,3,1,4]
 
 #     return sell2
 
-def max_profit(prices):
-    cost = [100000] * 3
-    profit = [0] * 3
+# def max_profit(prices):
+#     cost = [100000] * 3
+#     profit = [0] * 3
 
+#     for price in prices:
+#         for i in range(1,3):
+#             cost[i] = min(cost[i], price-profit[i-1])
+#             profit[i] = max(profit[i], price-cost[i])
+#     return profit[2]
+
+# prices = [3,3,5,0,0,3,1,4]
+# print(max_profit(prices)) 
+
+def maxProfit(prices):
+    cost1 = cost2 = float('inf')
+    profit1 = profit2 = 0
+    # cost1: the minimum cost so far for the first transaction
+    # profit1: the maximum profit so far for the first transaction
+    # cost2: the minimum cost so far for the second transaction 
+    # profit2: the maximum profit so far for the second transaction
     for price in prices:
-        for i in range(1,3):
-            cost[i] = min(cost[i], price-profit[i-1])
-            profit[i] = max(profit[i], price-cost[i])
-    return profit[2]
-
-prices = [3,3,5,0,0,3,1,4]
-print(max_profit(prices)) 
+        cost1 = min(cost1, price)
+        profit1 = max(profit1, price-cost1)
+        cost2 = min(cost2, price-profit1)
+        profit2 = max(profit2, price-cost2)
+    return profit2

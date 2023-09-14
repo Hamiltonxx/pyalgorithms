@@ -134,3 +134,17 @@ def editDistance(word1, word2):
             else:
                 dp[i][j] = dp[i-1][j-1] if word1[i-1]==word2[j-1] else min(dp[i-1][j-1]+1,dp[i-1][j]+1,dp[i][j-1]+1)
     return dp[m][n]
+
+
+from functools import lru_cache
+def edit_distance(word1, word2):
+    m, n = len(word1), len(word2)
+
+    @lru_cache(None)
+    def dp(i,j):
+        if i>=m: return n-j
+        if j>=n: return m-i
+        if word1[i] == word2[j]: return dp(i+1, j+1)
+        return min(dp(i,j+1), dp(i+1,j), dp(i+1,j+1)) + 1
+    
+    return dp(0,0)

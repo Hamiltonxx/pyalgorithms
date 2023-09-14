@@ -1,5 +1,6 @@
 import random
 import functools
+from collections import Counter
 
 ## 1. Fibonacci [1,1,2,3,5,8]
 def fibonacci(n):
@@ -146,3 +147,62 @@ def count_ways_to_pay_combination(coins, amount):
         return num_ways 
     return helper(0,amount)
 print([count_ways_to_pay_combination(coins, j) for j in range(3,10)])
+
+## 4. Number of expressions with a target result
+print("4. Number of expressions with a target result")
+nums, target = [1,2,2,3,1], 3 
+# 递归解法
+def expressions(nums, target):
+    @functools.lru_cache(None)
+    def count(idx, partial):
+        if idx == len(nums):
+            return 1 if partial==target else 0
+        cnt_add = count(idx+1, partial+nums[idx])
+        cnt_sub = count(idx+1, partial-nums[idx])
+        return cnt_add + cnt_sub
+    return count(1, nums[0])
+print(expressions(nums, target))
+
+# Dict解法
+def expressions_leetcode(nums, target):
+    d = {nums[0]:1}
+    for num in nums[1:]:
+        tmp = {}
+        for key in d:
+            tmp[key+num] = tmp.get(key+num, 0) + d[key]
+            tmp[key-num] = tmp.get(key-num, 0) + d[key]
+        d = tmp
+    return d.get(target, 0)
+print(expressions(nums, target))
+
+def expressions_ctr(nums, target):
+    ctr = Counter({nums[0]: 1})
+    for num in nums:
+        tmp = Counter()
+        for key,cnt in ctr.items():
+            tmp[key+num] += cnt
+            tmp[key-num] += cnt
+        ctr = tmp
+    return ctr[target]
+print(expressions_ctr(nums, target))
+
+# DP解法
+# left - right = target; left + right = sum; => left = (target + sum)/2
+
+## 5. Partitioning a set into equal-sum parts
+def exist_subset_sum(nums, target):
+    n = len(nums)
+    dp = [False] * (target+1)
+    dp[0] = True
+    for num in nums:
+        for i in range(target, num-1, -1):
+            dp[i] = dp[i] or dp[i-num]
+    return dp[target]
+
+def partitioning(nums):
+    sm = sum(nums)
+    if sm & 1: return False
+    target = sm // 2
+    return exist_subset_sum(nums, target)
+print(partitioning([2,3,5,6]))
+print(partitioning([1,2,5]))
