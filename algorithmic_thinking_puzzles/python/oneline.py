@@ -61,3 +61,9 @@ print(matrixT)
 # 解包
 a, *b, c = [1,2,3,4,5]
 print(a);print(b);print(c)
+
+# K大数,K小数
+import heapq
+nums = [3,5,6,1,9,2]
+ksmall = heapq.nsmallest(2, nums)[-1]
+klarge = heapq.nlargest(2, nums)[-1]

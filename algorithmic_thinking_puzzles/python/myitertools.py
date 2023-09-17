@@ -1,6 +1,6 @@
 # chain
 # takes a series of iterables and returns one iterable.
-from itertools import chain 
+from itertools import chain, accumulate
 odd, even = [1,3,5], [2,4,6]
 numbers = chain(odd, even)
 print(list(numbers))
@@ -17,3 +17,7 @@ print(list(numbers2))
 li = ['123','456','789']
 sm = sum(map(int,chain(*li)))
 print(sm)
+
+# accumulate
+diff = [0, 10, 45, -10, -20, 0]
+print(list(accumulate(diff)))
