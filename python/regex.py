@@ -32,5 +32,5 @@ print(True if x else False)
 # Set
 # [arn] [a-n] [^arn] [0123] [0-9] [0-5][0-9] [a-zA-Z] [+]
 
-y = re.match("^c*a*b$","aab")
-print(True if y else False)
+# y = re.match("^c*a*b$","aab") # 用search
+# print(True if y else False)

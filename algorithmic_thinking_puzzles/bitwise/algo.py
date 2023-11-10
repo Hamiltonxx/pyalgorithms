@@ -6,7 +6,7 @@ print(7 & 4)
 print(7 | 4)
 print(7 ^ 4)
 print(~7)
-print(~9) # 最高位是1，表示负数。数值是补码+1
+print(~9) # 最高位是1，表示负数.
 
 print(5 << 1)
 print(5 >> 1)
